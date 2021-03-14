@@ -1,0 +1,30 @@
+.example-container {
+  /* border: solid 5px white; */
+  /* padding: 2  %; */
+}
+
+.example-container .mat-form-field+.mat-form-field {
+  /* margin-left: 8px; */
+}
+
+.example-container .mat-form-field {
+  width: 250px;
+  height:50px;
+}
+
+.example-container form {
+  margin-bottom: 20px;
+}
+
+.example-container form>* {
+  margin: 5px 0;
+}
+
+.example-container .mat-radio-button {
+  margin: 0 12px;
+}
+
+.example-container .mat-flat-button {
+  margin: 10px 10px 10px                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              12px; 
+  /* padding: 5%; */
+}

@@ -1,0 +1,157 @@
+<div class="accordionmargin">
+    <form [formGroup]="addGraduateForm">
+        <mat-accordion class="example-headers-align">
+            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Personal data
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Type the name ,age and gender
+                        <mat-icon>account_circle</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <mat-form-field>
+                    <mat-label>Name : </mat-label>
+                    <input matInput [formControl]="name" placeholder="Enter name...." required>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Age : </mat-label>
+                    <input matInput type="number" [formControl]="age" placeholder="Enter age...." required>
+                </mat-form-field>
+
+                <mat-radio-group [formControl]="gender">
+                    <mat-label>Gender</mat-label>
+                    <mat-radio-button value="male">Male</mat-radio-button>
+                    <mat-radio-button value="female">Female</mat-radio-button>
+                    <mat-radio-button value="other">Other</mat-radio-button>
+                </mat-radio-group>
+
+                <mat-action-row>
+                    <button mat-button color="accent" (click)="nextStep()">Next</button>
+                </mat-action-row>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Contact Details
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Type the Email id , Address, Phone number
+                        <mat-icon>map</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <mat-form-field>
+                    <mat-label>Email Id : </mat-label>
+                    <input matInput [formControl]="emailId" placeholder="Enter email id...." required>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Address</mat-label>
+                    <textarea matInput [formControl]="address" placeholder="Enter address...."></textarea>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="locationList.length != 0" appearance="fill">
+                    <mat-label>Place of Residence</mat-label>
+                    <mat-select formControlName="locationId" placeholder="Enter place of residence">
+                        <mat-option *ngFor="let location of locationList" [value]="location.id">
+                            {{ location.city }}, {{location.state}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Phone Number : </mat-label>
+                    <input id="number" matInput [formControl]="phoneNumber" placeholder="Enter phone number...."
+                        required>
+                </mat-form-field>
+
+                <mat-action-row>
+                    <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                    <button mat-button color="accent" (click)="nextStep()">Next</button>
+                </mat-action-row>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        College Details
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Type the College Name and Roll Number
+                        <mat-icon>date_range</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <mat-label>Roll Number : </mat-label>
+                <mat-form-field appearance="fill">
+                    <input matInput [formControl]="rollNumber" placeholder="Enter roll number...." required>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="instituteList.length != 0">
+                    <mat-label>Institute</mat-label>
+                    <mat-select formControlName="instituteId" placeholder="Enter Institute">
+                        <mat-option *ngFor="let institute of instituteList" [value]="institute.id">
+                            {{ institute.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-action-row>
+                    <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                    <button mat-button color="accent" (click)="nextStep()">Next</button>
+                </mat-action-row>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Other Details
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        About you, joining date, preferred domain
+                        <mat-icon>date_range</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <mat-label>About you</mat-label>
+                <mat-form-field appearance="fill">
+                    <textarea matInput [formControl]="biography"
+                        placeholder="Tell a little about yourself...."></textarea>
+                </mat-form-field>
+
+                <mat-label>Joining Date</mat-label>
+                <mat-form-field appearance="fill" class="example-form-field">
+                    <mat-label>Joining Date</mat-label>
+                    <input matInput [matDatepicker]="datepicker" [formControl]="joiningDate">
+                    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker>
+                        <mat-datepicker-actions>
+                            <button mat-button matDatepickerCancel>Cancel</button>
+                            <button mat-raised-button color="accent" matDatepickerApply>Apply</button>
+                        </mat-datepicker-actions>
+                    </mat-datepicker>
+                </mat-form-field>
+
+                <mat-label>Preferred Domain</mat-label>
+                <mat-form-field *ngIf="skillList.length != 0" appearance="fill">
+                    <mat-select formControlName="skillId" placeholder="Enter preferred domain">
+                        <mat-option *ngFor="let skill of skillList" [value]="skill.id">
+                            {{ skill.category }} : {{skill.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <br>
+                <mat-action-row>
+                    <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                    <button mat-flat-button color="accent" (click)="submitForm()">Submit</button>
+                </mat-action-row>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </form>
+</div>

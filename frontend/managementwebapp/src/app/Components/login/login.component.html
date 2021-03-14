@@ -1,0 +1,31 @@
+<div *ngIf="!user" class="card text-center">
+    <h6 class="card-header"> MS AU Management System Login</h6>
+    <div class="card-block">
+        <h4 class="card-title"> Not Signed in</h4>
+        <p class="card-text"> Sign in with</p>
+    </div>
+    <div class="card-block">
+        <div class="form-group col-md-6 xyz">
+            <button type="button" class="btn btn-primary gplus" (click)="signInWithGoogle()">
+                <i class="fa fa-google"></i> Google
+            </button>
+        </div>
+        <button class="btn btn-social-icon btn-google mx-1"> </button>
+    </div>
+</div>
+<div *ngIf="user && registered" class="card text-center">
+    <h2 class="Card-header"> Already Logged In, please switch tabs!</h2>
+</div>
+
+<div *ngIf="user && !registered" class="card text-center">
+    <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+        <img src="{{customUser.photoUrl}}" class="card-img-top img-responsive photo" />
+        <p>{{customUser.name}}</p>
+        <br>
+        <p> {{customUser.emailId}} </p>
+        <mat-form-field appearance="fill">
+            <input matInput [formControl]="designation" placeholder="Enter Designation...." required>
+        </mat-form-field>
+        <button mat-flat-button color="accent">Submit</button>
+    </form>
+</div>

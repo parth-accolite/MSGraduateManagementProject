@@ -1,0 +1,79 @@
+package com.ms.au;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.ms.au.controllers.UserController;
+import com.ms.au.dao.IUserDao;
+import com.ms.au.entities.User;
+
+@SpringBootTest(classes = MsauManagementApplication.class)
+public class TestUserController {
+		@Autowired
+		private UserController userController;
+
+		@MockBean
+		private IUserDao iUserDao;
+
+		public User initUser(Integer id, String name, String category) {
+			User user = new User();
+
+			user.setId(id);
+			user.setName(name);
+			user.setCategory(category);
+			user.setGraduates(null);
+			return user;
+		}
+
+		public User defaultUser() {
+			return initUser(1, "user 1", "category 1");
+		}
+
+		public List<User> initUserList() {
+			List<User> userList = new ArrayList<User>();
+			userList.add(initUser(1, "user 1", "category 1"));
+			userList.add(initUser(2, "user 2", "category 2"));
+			userList.add(initUser(3, "user 3", "category 3"));
+
+			return userList;
+		}
+
+		@Test
+		void saveTest() {
+			User user = defaultUser();
+			when(iUserDao.save(user)).thenReturn(user);
+			assertEquals(1, userController.save(user).getId());
+			assertEquals("user 1", userController.save(user).getName());
+			assertEquals("category 1", userController.save(user).getCategory());
+			assertEquals(null, userController.save(user).getGraduates());
+
+		}
+
+		@Test
+		void getAllTest() {
+			List<User> userList = initUserList();
+			when(iUserDao.findAll()).thenReturn(userList);
+			assertEquals(1, userController.getAll().get(0).getId());
+			assertEquals(2, userController.getAll().get(1).getId());
+			assertEquals(3, userController.getAll().get(2).getId());
+		}
+
+		@Test
+		void findByEmailIdTest() {
+			Optional<User> user = Optional.of(defaultUser());
+			when(iUserDao.findById(1)).thenReturn(user);
+			assertEquals(false, userController.findById(1).contains(1));
+		}
+
+	}
+
+}

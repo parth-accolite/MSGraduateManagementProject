@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <h1 [routerLink]="'/'">MS AU Management System</h1>
+        <span class="menu-spacer"></span>
+        <div *ngIf="!loggedIn">
+            <a mat-button [routerLink]="'/login'"> Login </a>
+        </div>
+        <div *ngIf="loggedIn">
+            <button mat-button (click)="signOut()" > Signout </button>
+        </div>
+        <div>
+            <a mat-button [routerLink]="'/graduate'"> Graduate </a>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

@@ -1,0 +1,11 @@
+package com.ms.au;
+
+import org.mockito.InjectMocks;
+
+import com.ms.au.controllers.InstituteController;
+
+public class TestInstituteController {
+		@InjectMocks
+		InstituteController instituteController;
+		
+}

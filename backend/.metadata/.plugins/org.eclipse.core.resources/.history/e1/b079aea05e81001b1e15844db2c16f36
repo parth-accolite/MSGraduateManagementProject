@@ -1,0 +1,9 @@
+package com.ms.au.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.ms.au.entities.Graduate;
+
+public interface IGraduateDao extends JpaRepository<Graduate, Integer> {
+
+}

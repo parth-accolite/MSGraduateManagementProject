@@ -1,0 +1,5 @@
+.content {
+    height: calc(50vh);
+    overflow: auto;
+    width: calc(100vh);
+}

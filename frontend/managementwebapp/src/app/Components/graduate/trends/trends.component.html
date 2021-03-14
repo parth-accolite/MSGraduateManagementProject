@@ -1,0 +1,25 @@
+<mat-grid-list cols="9" rowHeight="100px">
+    <mat-grid-tile [colspan]=3 [rowspan]=3>
+        <h4> Institute-Wise chart</h4><br>
+        <div *ngIf="instituteList.length !== 0">
+            <app-chart [chartLabels]="instituteLabels" [chartType]="instituteType" [chartData]="instituteData">
+            </app-chart>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]=3 [rowspan]=3>
+        <h4> Location-Wise chart</h4><br>
+        <div *ngIf="locationList.length !== 0">
+            <app-chart [chartLabels]="locationLabels" [chartType]="locationType" [chartData]="locationData">
+            </app-chart>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]=3 [rowspan]=3>
+        <h4> Skill-Wise chart</h4><br>
+        <div *ngIf="skillList.length !== 0 && graduateList.length !== 0">
+            <app-chart [chartLabels]="skillLabels" [chartType]="skillType" [chartData]="skillData">
+            </app-chart>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]=3 [rowspan]=3>
+    </mat-grid-tile>
+</mat-grid-list>

@@ -1,0 +1,12 @@
+package com.ms.au.crud.services;
+
+import java.util.List;
+
+import com.ms.au.entities.Institute;
+
+public interface IInstituteService {
+
+	public List<Institute> getAll();
+
+	public Institute save(Institute institute);
+}

@@ -1,0 +1,268 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-image">
+            <!-- <img mat-card-image [src]="selectedGraduate.photoUrl" alt="Photo of a Shiba Inu"> -->
+        </div>
+        <mat-card-title>{{selectedGraduate.name}}</mat-card-title>
+        <mat-card-subtitle>{{selectedGraduate.emailId}}
+            <button mat-button (click)="accordion.openAll()">Expand All</button>
+            <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+    <mat-card-content>
+
+        <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Personal data
+                    </mat-panel-title>
+                    <mat-panel-description> |
+                        <mat-icon>account_circle</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div *ngIf="!showPersonalDetailsForm">
+                    <mat-label>Name : </mat-label>
+                    <mat-label>{{selectedGraduate.name}}</mat-label><br>
+                    <mat-label>Age : </mat-label>
+                    <mat-label>{{selectedGraduate.age}}</mat-label><br>
+                    <mat-label>Gender : </mat-label>
+                    <mat-label>{{selectedGraduate.gender}}</mat-label>
+                    <mat-action-row>
+                        <button mat-button color="accent" (click)="editPersonalDetails()">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </mat-action-row>
+                </div>
+                <div *ngIf="showPersonalDetailsForm">
+
+                    <form [formGroup]="editPersonalDetailsForm">
+                        <mat-form-field>
+                            <mat-label>Name : </mat-label>
+                            <input matInput [formControl]="name" placeholder="Enter name...." required>
+                        </mat-form-field> <br>
+                        <mat-form-field>
+                            <mat-label>Age : </mat-label>
+                            <input matInput type="number" [formControl]="age" placeholder="Enter age...." required>
+                        </mat-form-field><br>
+                        <mat-radio-group [formControl]="gender">
+                            <mat-label>Gender</mat-label>
+                            <mat-radio-button value="male">Male</mat-radio-button>
+                            <mat-radio-button value="female">Female</mat-radio-button>
+                            <mat-radio-button value="other">Other</mat-radio-button>
+                        </mat-radio-group> <br>
+                        <button mat-flat-button color="accent" (click)="editPersonalDetails()">Submit</button>
+                    </form>
+                </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Contact Details
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        |
+                        <mat-icon>perm_contact_calendar</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div *ngIf="!showContactDetailsForm">
+
+                    <mat-label>Email Id : </mat-label>
+                    <mat-label>{{selectedGraduate.emailId}}</mat-label><br>
+                    <mat-label>Address : </mat-label>
+                    <mat-label> {{selectedGraduate.address}} </mat-label>
+                    <mat-label>| Place of Residence : </mat-label>
+                    <mat-label *ngIf="graduateLocationDetails !== undefined">
+                        {{graduateLocationDetails.city}} , {{graduateLocationDetails.state}}
+                    </mat-label><br>
+                    <mat-label>Phone Number : </mat-label>
+                    <mat-label>{{selectedGraduate.phoneNumber}}</mat-label>
+                    <mat-action-row>
+                        <button mat-button color="accent" (click)="editContactDetails()">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </mat-action-row>
+                </div>
+                <div *ngIf="showContactDetailsForm">
+                    <form [formGroup]="editContactDetailsForm">
+
+                        <mat-form-field>
+                            <mat-label>Email Id : </mat-label>
+                            <input matInput [formControl]="emailId" placeholder="Enter email id...." required>
+                        </mat-form-field> <br>
+
+                        <mat-form-field>
+                            <mat-label>Address</mat-label>
+                            <textarea matInput [formControl]="address" placeholder="Enter address...."></textarea>
+                        </mat-form-field> <br>
+
+                        <mat-form-field *ngIf="locationList.length != 0" appearance="fill">
+                            <mat-label>Place of Residence</mat-label>
+                            <mat-select formControlName="locationId" placeholder="Enter place of residence">
+                                <mat-option *ngFor="let location of locationList" [value]="location.id">
+                                    {{ location.city }}, {{location.state}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field> <br>
+
+                        <mat-form-field>
+                            <mat-label>Phone Number : </mat-label>
+                            <input id="number" matInput [formControl]="phoneNumber" placeholder="Enter phone number...."
+                                required>
+                        </mat-form-field> <br>
+                        <button mat-flat-button color="accent" (click)="editContactDetails()">Submit</button>
+                    </form>
+                </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        College Details
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        |
+                        <mat-icon>book</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div *ngIf="!showCollegeDetailsForm">
+
+                    <mat-label>Roll Number : </mat-label>
+                    <mat-label>{{selectedGraduate.rollNumber}}</mat-label>
+                    <br>
+
+                    <mat-label>Institute : </mat-label>
+                    <mat-label *ngIf="instituteDetails !== undefined">
+                        {{instituteDetails.name}} ,
+                        <mat-label *ngIf="instituteLocationDetails !== undefined">
+                            {{instituteLocationDetails.city}} , {{instituteLocationDetails.state}}
+                        </mat-label>
+                    </mat-label>
+                    <mat-action-row>
+                        <button mat-button color="accent" (click)="editCollegeDetails()">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </mat-action-row>
+                </div>
+                <div *ngIf="showCollegeDetailsForm">
+                    <form [formGroup]="editCollegeDetailsForm">
+                        <mat-form-field>
+                            <mat-label>Roll Number : </mat-label>
+                            <input matInput [formControl]="rollNumber" placeholder="Enter roll number...." required>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field *ngIf="instituteList.length != 0">
+                            <mat-label>Institute</mat-label>
+                            <mat-select formControlName="instituteId" placeholder="Enter Institute">
+                                <mat-option *ngFor="let institute of instituteList" [value]="institute.id">
+                                    {{ institute.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field> <br>
+                        <mat-action-row>
+
+                            <button mat-flat-button color="accent" (click)="editCollegeDetails()">Submit</button>
+                        </mat-action-row>
+                    </form>
+                </div>
+
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Other Details
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        |
+                        <mat-icon> category</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div *ngIf="!showOtherDetailsForm">
+
+                    <mat-label>About {{selectedGraduate.name}} : </mat-label>
+                    <mat-label> {{selectedGraduate.biography}}</mat-label>
+                    <br>
+
+                    <mat-label>Joining Date : </mat-label>
+                    <mat-label>{{selectedGraduate.joiningDate.toString() | date}}</mat-label> <br>
+
+                    <!-- <mat-label>Preferred Domain : </mat-label> <br> -->
+                    <div *ngFor="let skill of selectedGraduate.skills">
+                        <mat-label>{{skill.category}} : {{skill.name}} </mat-label>
+                    </div>
+                    <div *ngIf="selectedGraduate.feedbacks.length !== 0">
+                        <mat-label>Feedbacks: </mat-label><br>
+                    </div>
+                    <div *ngFor="let feedback of selectedGraduate.feedbacks">
+                        <mat-label>{{feedback.title}} : {{feedback.description}}</mat-label> <br>
+                    </div>
+
+                    <mat-action-row>
+                        <button mat-button color="accent" (click)="editOtherDetails()">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </mat-action-row>
+                </div>
+                <div *ngIf="showOtherDetailsForm">
+                    <form [formGroup]="editOtherDetailsForm">
+                        <mat-form-field>
+                            <mat-label>About {{selectedGraduate.name}}</mat-label>
+                            <textarea matInput [formControl]="biography"
+                                placeholder="Tell a little about yourself...."></textarea>
+                        </mat-form-field> <br>
+                        <mat-form-field class="example-form-field">
+                            <mat-label>Joining Date</mat-label>
+                            <mat-label>Joining Date</mat-label>
+                            <input matInput [matDatepicker]="datepicker" [formControl]="joiningDate">
+                            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #datepicker>
+                                <mat-datepicker-actions>
+                                    <button mat-button matDatepickerCancel>Cancel</button>
+                                    <button mat-raised-button color="accent" matDatepickerApply>Apply</button>
+                                </mat-datepicker-actions>
+                            </mat-datepicker>
+                        </mat-form-field><br>
+
+                        <!-- <mat-label>Preferred Domain</mat-label>
+                <mat-form-field *ngIf="skillList.length != 0" appearance="fill">
+                    <mat-select formControlName="skillId" placeholder="Enter preferred domain">
+                        <mat-option *ngFor="let skill of skillList" [value]="skill.id">
+                            {{ skill.category }} : {{skill.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+                        <mat-action-row>
+                            <button mat-flat-button color="accent" (click)="editOtherDetails()">Submit</button>
+                        </mat-action-row>
+                    </form>
+                </div>
+            </mat-expansion-panel>
+
+
+        </mat-accordion>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-flat-button color="warn" (click)="deleteSelectedGraduate()">DELETE</button>
+        <button *ngIf="!showFeedbackForm" mat-flat-button color="accent" (click)="showFeedback()">Give Feedback</button>
+        <button *ngIf="showFeedbackForm" mat-flat-button color="primary" (click)="submitFeedback()">Submit
+            Feedback</button>
+
+    </mat-card-actions>
+
+    <div *ngIf="showFeedbackForm">
+        <form [formGroup]="feedbackForm">
+            <mat-form-field>
+                <mat-label>Title : </mat-label>
+                <input matInput [formControl]="feedbackTitle" placeholder="Enter Title...." required>
+            </mat-form-field> <br>
+            <mat-form-field>
+                <mat-label>Description : </mat-label>
+                <textarea matInput [formControl]="feedbackDescription" placeholder="Enter feedback...."></textarea>
+            </mat-form-field>
+        </form>
+    </div>
+</mat-card>

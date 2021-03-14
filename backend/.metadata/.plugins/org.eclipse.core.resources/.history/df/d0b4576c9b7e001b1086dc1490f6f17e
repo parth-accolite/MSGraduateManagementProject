@@ -1,0 +1,27 @@
+package com.ms.au.crud.services.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.ms.au.crud.services.ILocationService;
+import com.ms.au.dao.IInstituteDao;
+import com.ms.au.dao.ILocationDao;
+import com.ms.au.entities.Location;
+
+public class LocationServiceImpl implements ILocationService {
+
+	@Autowired
+	ILocationDao iLocationDao;
+
+	@Override
+	public List<Location> getAll() {
+		return iLocationDao.findAll();
+	}
+
+	@Override
+	public Location save(Location location) {
+		return iLocationDao.save(location);
+	}
+
+}

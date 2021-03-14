@@ -1,0 +1,17 @@
+package com.ms.au.crud.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.ms.au.entities.Graduate;
+import com.ms.au.entities.Skill;
+
+public interface ISkillService {
+
+	public List<Skill> getAll();
+
+	public Skill save(Skill skill);
+
+	public List<Graduate> findById(Integer skillId);
+
+}

@@ -1,0 +1,113 @@
+package com.ms.au;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.ms.au.controllers.GraduateController;
+import com.ms.au.dao.IGraduateDao;
+import com.ms.au.entities.Graduate;
+
+@SpringBootTest(classes = MsauManagementApplication.class)
+public class TestGraduateController {
+	@Autowired
+	private GraduateController graduateController;
+
+	@MockBean
+	private IGraduateDao iGraduateDao;
+
+	public Graduate initGraduate(Integer id, String title, Integer graduateId, String desc) {
+		Graduate graduate = new Graduate();
+
+		graduate.setId(id);
+		graduate.setName                   ();
+		graduate.setAge                    ();
+		graduate.setGender                 ();
+		graduate.setAddress                ();
+		graduate.setPhoneNumber            ();
+		graduate.setEmailId                ();
+		graduate.setJoiningDate            ();
+		graduate.setRollNumber             ();
+		graduate.setBiography              ();
+		graduate.setIsDeleted              ();
+		graduate.setInstituteId            ();
+		graduate.setLocationId             ();
+		graduate.setFeedbacks              ();
+		graduate.setSkills                 ();
+		return graduate;
+	}
+
+	public Graduate defaultGraduate() {
+		return initGraduate(1, "ABC", 1, "abc");
+	}
+
+	public List<Graduate> initGraduateList() {
+		List<Graduate> graduateList = new ArrayList<Graduate>();
+		graduateList.add(initGraduate(1, "ABC", 1, "abc"));
+		graduateList.add(initGraduate(2, "DEF", 2, "def"));
+		graduateList.add(initGraduate(3, "GHI", 3, "ghi"));
+
+		return graduateList;
+	}
+
+	@Test
+	void saveTest() {
+		Graduate graduate = defaultGraduate();
+		when(iGraduateDao.save(graduate)).thenReturn(graduate);
+
+		assertEquals(1, graduateController.save(graduate).getId());
+		assertEquals("ABC", graduateController.save(graduate).getTitle());
+		assertEquals(1, graduateController.save(graduate).getGraduateId());
+		assertEquals("abc", graduateController.save(graduate).getDescription());
+		assertEquals(null, graduateController.save(graduate).getCreatedAt());
+
+	}
+
+//		@Test
+//		void selectGraduateByRoleTest() {
+//			List<Graduate> graduateList = new ArrayList<Graduate>();
+//			graduateList.add(defaultGraduate());
+//			when(iGraduateDao.selectGraduateByRole("test role")).thenReturn(graduateList);
+	//
+//			assertEquals("graduate1@gmail.com",
+//					graduateController.selectGraduateByRole("test role").get(0).getEmailAddress());
+//		}
+	//
+	@Test
+	void getAllTest() {
+		List<Graduate> graduateList = initGraduateList();
+		when(iGraduateDao.findAll()).thenReturn(graduateList);
+		assertEquals(1, graduateController.getAll().get(0).getId());
+		assertEquals(2, graduateController.getAll().get(1).getId());
+		assertEquals(3, graduateController.getAll().get(2).getId());
+	}
+
+
+	@Test
+	void findByIdTest() {
+		Optional<Graduate> graduate = Optional.of(defaultGraduate());
+
+		when(iGraduateDao.findById(1)).thenReturn(graduate);
+
+		assertEquals(1, graduateController.findById(1).get().getId());
+	}
+	//
+//		@Test
+//		void findByEmailIdTest() {
+//			Graduate graduate = defaultGraduate();
+//			when(iGraduateDao.findByEmailAddress("graduate1@gmail.com")).thenReturn(graduate);
+//			assertEquals("graduate1@gmail.com",
+//					graduateController.findByEmailAddress("graduate1@gmail.com").getEmailAddress());
+//		}
+
+}
+
+}

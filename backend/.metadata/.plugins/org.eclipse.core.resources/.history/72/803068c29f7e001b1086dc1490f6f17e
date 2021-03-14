@@ -1,0 +1,26 @@
+package com.ms.au.crud.services.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.ms.au.crud.services.IUserService;
+import com.ms.au.dao.IUserDao;
+import com.ms.au.entities.User;
+
+public class UserServiceImpl implements IUserService {
+
+	@Autowired
+	IUserDao iUserDao;
+
+	@Override
+	public List<User> getAll() {
+		return iUserDao.findAll();
+	}
+
+	@Override
+	public User save(User user) {
+		return iUserDao.save(user);
+	}
+
+}

@@ -1,0 +1,50 @@
+<div class="example-container">
+  <form [formGroup]="searchForm" (ngSubmit)="submitForm()">
+    <div>
+      <label>Category : </label>
+      <mat-radio-group [formControl]="searchCategory">
+        <mat-radio-button value="Name">Name</mat-radio-button>
+        <mat-radio-button *ngIf="instituteList.length != 0" value="Institute">Institute</mat-radio-button>
+        <mat-radio-button *ngIf="skillList.length != 0" value="Skill">Skill</mat-radio-button>
+        <mat-radio-button *ngIf="locationList.length != 0" value="Location">Location</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div *ngIf="searchCategory.value=='Name'">
+      <mat-form-field>
+        <input matInput [formControl]="searchValue" placeholder="Enter name...." required>
+      </mat-form-field>
+    </div>
+    <div *ngIf="searchCategory.value=='Institute'">
+      <mat-form-field *ngIf="instituteList.length != 0">
+        <mat-label>Institute</mat-label>
+        <mat-select formControlName="searchValue" placeholder="Enter Institute">
+          <mat-option *ngFor="let institute of instituteList" [value]="institute.id">
+            {{ institute.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+    <div *ngIf="searchCategory.value=='Skill'">
+      <mat-form-field *ngIf="skillList.length != 0">
+        <mat-label>Preferred Domain</mat-label>
+        <mat-select formControlName="searchValue" placeholder="Enter domain">
+          <mat-option *ngFor="let skill of skillList" [value]="skill.id">
+            {{ skill.category }} : {{skill.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div *ngIf="searchCategory.value=='Location'">
+      <mat-form-field *ngIf="locationList.length != 0">
+        <mat-label>Place of Residence</mat-label>
+        <mat-select formControlName="searchValue" placeholder="Choose location">
+          <mat-option *ngFor="let location of locationList" [value]="location.id">
+            {{ location.city }}, {{location.state}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button mat-flat-button color="accent">Submit</button>
+  </form>
+</div>

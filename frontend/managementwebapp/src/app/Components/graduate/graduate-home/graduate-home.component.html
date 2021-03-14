@@ -1,0 +1,42 @@
+<mat-tab-group mat-align-tabs="center" [selectedIndex]="selectedTab.value"
+    (selectedIndexChange)="selectedTab.setValue($event)">
+    <mat-tab label="Add new Graduate">
+        <ng-template matTabContent>
+            <app-add (selectedTab)="getSelectedTab($event)"></app-add>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="View All Graduates">
+        <ng-template matTabContent>
+            <mat-grid-list cols="9" rowHeight="100px">
+                <mat-grid-tile [colspan]=3 [rowspan]=2>
+                    <app-search (graduatesList)="getGraduatesList($event)"></app-search>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]=2 [rowspan]=2>
+                </mat-grid-tile>
+                <mat-grid-tile *ngIf="selectedGraduate!=null" [colspan]=4 [rowspan]=8>
+                    <app-view-graduate-details [selectedGraduate]="selectedGraduate"></app-view-graduate-details>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]=5 [rowspan]=6>
+                    <div *ngIf="graduatesList.length === 0; then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock>
+                        <mat-spinner></mat-spinner>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                        <app-view-all (selectedGraduate)="getGraduate($event)" [graduatesList]="graduatesList">
+                        </app-view-all>
+                    </ng-template>
+                </mat-grid-tile>
+
+
+                <!-- <mat-grid-tile *ngIf="selectedGraduate!=null" [colspan]=2 [rowspan]=5>
+                    <app-view-graduate-details [selectedGraduate]="selectedGraduate"></app-view-graduate-details>
+                </mat-grid-tile> -->
+            </mat-grid-list>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="Trends">
+        <ng-template matTabContent>
+            <app-trends></app-trends>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>

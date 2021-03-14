@@ -1,0 +1,7 @@
+package com.ms.au.entities;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ISkillDao extends JpaRepository<Skill, Integer> {
+
+}

@@ -1,0 +1,74 @@
+package com.ms.au.entities;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Graduate {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column
+	private String name;
+
+	@Column
+	private Integer age;
+
+	@Column
+	private String gender;
+
+	@Column
+	private String address;
+
+	@Column
+	private String phoneNumber;
+
+	@Column
+	private String emailId;
+
+	@Column
+	private Date joiningDate;
+
+	@Column
+	private String rollNumber;
+
+	@Column
+	private String biography;
+	
+	@Column
+	private Boolean isDeleted;
+
+	@JoinColumn(name = "institute_id")
+	private Integer instituteId;
+
+	@JoinColumn(name = "location_id")
+	private Integer locationId;
+
+	@OneToMany(mappedBy = "graduateId", cascade = CascadeType.ALL)
+	private List<Feedback> feedbacks = new ArrayList<>();
+
+	@ManyToMany
+	@JoinTable(name = "graduate_skill", joinColumns = @JoinColumn(name = "graduate_id"), inverseJoinColumns = @JoinColumn(name = "skill_id"))
+	private List<Skill> skills = new ArrayList<>();
+
+}

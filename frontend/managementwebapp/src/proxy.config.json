@@ -1,0 +1,26 @@
+{
+    "/User/*": {
+        "target": "http://localhost:8080/",
+        "secure": false
+    },
+    "/Graduate/*": {
+        "target": "http://localhost:8080/",
+        "secure": false
+    },
+    "/Feedback/*": {
+        "target": "http://localhost:8080/",
+        "secure": false
+    },
+    "/Institute/*": {
+        "target": "http://localhost:8080/",
+        "secure": false
+    },
+    "/Location/*": {
+        "target": "http://localhost:8080/",
+        "secure": false
+    },
+    "/Skill/*": {
+        "target": "http://localhost:8080/",
+        "secure": false
+    }
+}

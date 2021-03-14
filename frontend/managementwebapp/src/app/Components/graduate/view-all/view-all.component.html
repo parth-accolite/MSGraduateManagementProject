@@ -1,0 +1,25 @@
+<!-- <div style="padding: 13px;">
+    <mat-spinner *ngIf="graduatesList.length == 0; else #elseblock"></mat-spinner>
+
+    <ng-template #elseblock>
+    </ng-template>
+</div> -->
+<!-- <mat-card *ngFor="let graduate of graduatesList;" style="margin-top:11px;">
+    <mat-card-header>
+        <mat-card-title>{{graduate.name}}</mat-card-title>
+    </mat-card-header>
+</mat-card> -->
+
+<mat-list class="content">
+    <mat-list-item *ngFor="let graduate of graduatesList">
+        <img matListAvatar src="https://picsum.photos/id/1025/200/300">
+        <h3 matLine> {{graduate.name}} </h3>
+        <p matLine>
+            <span> {{graduate.emailId}} </span>
+        </p>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="sendGraduate(graduate)">
+            <mat-icon>arrow_forward_ios</mat-icon>
+        </button>
+    </mat-list-item>
+</mat-list>

@@ -1,0 +1,105 @@
+package com.ms.au;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.apache.poi.sl.usermodel.ObjectMetaData.Application;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.ms.au.controllers.InstituteController;
+import com.ms.au.dao.IInstituteDao;
+import com.ms.au.entities.Institute;
+
+@SpringBootTest(classes = Application.class)
+public class TestInstituteController {	@Autowired
+	private InstituteController instituteController;
+
+	@MockBean
+	private IInstituteDao iInstituteDao;
+
+	public Institute initInstitute(Integer id, String name, Integer locationId, String shortHand) {
+		Institute institute = new Institute();
+
+		institute.setId(id);
+		institute.setName(name);
+		institute.setLocationId(locationID);
+		institute.setShortHand(shortHand);
+		institute.setGraduates(null);
+		return institute;
+	}
+
+	public Institute defaultInstitute() {
+		return initInstitute("institute 1", "institute1@gmail.com", 100, "institute 1");
+	}
+
+	public List<Institute> initInstituteList() {
+		List<Institute> instituteList = new ArrayList<Institute>();
+		instituteList.add(initInstitute("institute 1", "institute1@gmail.com", 100, "institute 1"));
+		instituteList.add(initInstitute("institute 2", "institute2@gmail.com", 200, "institute 2"));
+		instituteList.add(initInstitute("institute 3", "institute3@gmail.com", 300, "institute 3"));
+
+		return instituteList;
+	}
+
+	@Test
+	void saveTest() {
+		Institute institute = defaultInstitute();
+		when(iInstituteDao.save(institute)).thenReturn(institute);
+
+		assertEquals("institute1@gmail.com", instituteController.save(institute).getEmailAddress());
+		assertEquals("institute 1", instituteController.save(institute).getName());
+		assertEquals(100, instituteController.save(institute).getId());
+		assertEquals("institute 1", instituteController.save(institute).getAadharCard());
+		assertEquals(null, instituteController.save(institute).getAmenitiesBooking());
+		assertEquals(null, instituteController.save(institute).getAnnouncements());
+		assertEquals(null, instituteController.save(institute).getAttendances());
+		assertEquals(null, instituteController.save(institute).getComplaints());
+		assertEquals(null, instituteController.save(institute).getFlats());
+		assertEquals(null, instituteController.save(institute).getPayments());
+		assertEquals(null, instituteController.save(institute).getRoles());
+		assertEquals(null, instituteController.save(institute).getDateOfBirth());
+
+	}
+
+	@Test
+	void selectInstituteByRoleTest() {
+		List<Institute> instituteList = new ArrayList<Institute>();
+		instituteList.add(defaultInstitute());
+		when(iInstituteDao.selectInstituteByRole("test role")).thenReturn(instituteList);
+
+		assertEquals("institute1@gmail.com", instituteController.selectInstituteByRole("test role").get(0).getEmailAddress());
+	}
+
+	@Test
+	void getAllTest() {
+		List<Institute> instituteList = initInstituteList();
+		when(iInstituteDao.findAll()).thenReturn(instituteList);
+		assertEquals("institute1@gmail.com", instituteController.getAll().get(0).getEmailAddress());
+		assertEquals("institute2@gmail.com", instituteController.getAll().get(1).getEmailAddress());
+		assertEquals("institute3@gmail.com", instituteController.getAll().get(2).getEmailAddress());
+	}
+
+	@Test
+	void findByIdTest() {
+		Optional<Institute> institute = Optional.of(defaultInstitute());
+
+		when(iInstituteDao.findById(100)).thenReturn(institute);
+
+		assertEquals("institute1@gmail.com", instituteController.findById(100).get().getEmailAddress());
+	}
+
+	@Test
+	void findByEmailIdTest() {
+		Institute institute = defaultInstitute();
+		when(iInstituteDao.findByEmailAddress("institute1@gmail.com")).thenReturn(institute);
+		assertEquals("institute1@gmail.com", instituteController.findByEmailAddress("institute1@gmail.com").getEmailAddress());
+	}
+
+}

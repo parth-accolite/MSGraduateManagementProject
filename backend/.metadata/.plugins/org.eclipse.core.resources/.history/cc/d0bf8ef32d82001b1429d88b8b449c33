@@ -1,0 +1,93 @@
+package com.ms.au
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.ms.au.controllers.LocationController;
+import com.ms.au.dao.ILocationDao;
+import com.ms.au.entities.Location;
+
+@SpringBootTest(classes = MsauManagementApplication.class)
+public class TestLocationController {
+	@Autowired
+	private LocationController locationController;
+
+	@MockBean
+	private ILocationDao iLocationDao;
+
+	public Location initLocation(Integer id, String city, String state) {
+		Location location = new Location();
+
+		location.setId(id);
+		location.setCity(city);
+		location.setState(state);
+		location.setInstitutes(null);
+		location.setGraduates(null);
+		return location;
+	}
+
+	public Location defaultLocation() {
+		return initLocation(1, "city 1", "state 1");
+	}
+
+	public List<Location> initLocationList() {
+		List<Location> locationList = new ArrayList<Location>();
+		locationList.add(initLocation(1, "city 1", "state 1"));
+		locationList.add(initLocation(2, "city 2", "state 2"));
+		locationList.add(initLocation(3, "city 3", "state 3"));
+
+		return locationList;
+	}
+
+	@Test
+	void saveTest() {
+		Location location = defaultLocation();
+		when(iLocationDao.save(location)).thenReturn(location);
+		assertEquals(1, locationController.save(location).getId());
+	}
+
+//			@Test
+//			void selectLocationByRoleTest() {
+//				List<Location> locationList = new ArrayList<Location>();
+//				locationList.add(defaultLocation());
+//				when(iLocationDao.selectLocationByRole("test role")).thenReturn(locationList);
+	//
+//				assertEquals("location1@gmail.com",
+//						locationController.selectLocationByRole("test role").get(0).getEmailAddress());
+//			}
+	//
+	@Test
+	void getAllTest() {
+		List<Location> locationList = initLocationList();
+		when(iLocationDao.findAll()).thenReturn(locationList);
+		assertEquals(1, locationController.getAll().get(0).getId());
+		assertEquals(2, locationController.getAll().get(1).getId());
+		assertEquals(3, locationController.getAll().get(2).getId());
+	}
+
+//		@Test
+//		void findByNameTest() {
+//			Optional<List<Location>> locationList = Optional.of(defaultLocation());
+	//
+//			when(iLocationDao.findByName("grad")).thenReturn(locationList);
+	//
+//			assertEquals(1, locationController.findByName("grad").get()[]
+//		}
+	//
+//			@Test
+//			void findByEmailIdTest() {
+//				Location location = defaultLocation();
+//				when(iLocationDao.findByEmailAddress("location1@gmail.com")).thenReturn(location);
+//				assertEquals("location1@gmail.com",
+//						locationController.findByEmailAddress("location1@gmail.com").getEmailAddress());
+//			}
+
+}

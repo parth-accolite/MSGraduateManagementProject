@@ -1,0 +1,5 @@
+package com.ms.au.crud.services;
+
+public interface IGraduateService {
+
+}

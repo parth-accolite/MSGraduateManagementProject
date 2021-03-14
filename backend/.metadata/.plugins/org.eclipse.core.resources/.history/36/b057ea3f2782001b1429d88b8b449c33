@@ -1,0 +1,22 @@
+package com.ms.au;
+
+import org.aspectj.lang.annotation.Before;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import com.ms.au.controllers.InstituteController;
+import com.ms.au.dao.IInstituteDao;
+
+public class TestInstituteController {
+	@InjectMocks
+	InstituteController instituteController;
+	
+	@Mock
+	IInstituteDao iInstituteDao;
+	
+	@Before
+	public void init() {
+		MockitoAnnotations.initMocks(this);
+	}
+}
